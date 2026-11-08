@@ -100,22 +100,38 @@ Install cuDNN into the appropriate CUDA directories according to its Windows ins
 
 The CUDA compiler (`nvcc`) and Microsoft C++ compiler (`cl`) must both be available to the build process.
 
-## 4. Create the build environment
+## 4. Prepare the build environment
 
-Open an Anaconda Prompt and create a dedicated Python environment:
-
-```bat
-conda create -n py311_debug python=3.11
-conda activate py311_debug
-```
-
-Install the required PyTorch build and verify that it is available:
+Create and activate a dedicated Python 3.11 environment:
 
 ```bat
-python -c "import torch; print(torch.__version__); print(torch.version.cuda); print(torch.cuda.get_arch_list())"
+conda create -n mamba_legacy python=3.11 -y
+conda activate mamba_legacy
 ```
 
-Install and verify causalconv1d.
+Install the prebuilt PyTorch and causal-conv1d wheels provided above.
+
+```bat
+python -m pip install --no-deps torch-2.7.1-cp311-cp311-win_amd64.whl
+python -m pip install --no-deps causal_conv1d-1.7.0-cp311-cp311-win_amd64.whl
+```
+
+Verify that both packages are available:
+
+```bat
+python -c "import torch; print('PyTorch:', torch.__version__); print('CUDA available:', torch.cuda.is_available())"
+python -c "import causal_conv1d; print('causal-conv1d:', causal_conv1d.__version__)"
+```
+
+Before proceeding, ensure that:
+
+- The environment uses Python 3.11.
+- PyTorch and causal-conv1d import successfully.
+- The CUDA Toolkit 11.8 compiler (`nvcc`) is available.
+- The Visual Studio 2019 x64 compiler environment (`cl`) is initialized.
+- The installed PyTorch build exposes the intended CUDA architectures.
+
+**Important:** The supplied wheels are built for the reference environment described in Section 1. Use compatible wheels and dependencies rather than allowing pip to replace the preconfigured PyTorch installation.
 
 ## 5. Build the extension
 
@@ -157,7 +173,7 @@ The architecture selection is handled by the build script; `setup.py` simply con
 After a successful build, install the generated wheel:
 
 ```bat
-python -m pip install --no-deps dist\causal_conv1d-*.whl
+python -m pip install --no-deps dist\mamba_ssm-2.3.2.post1-cp311-cp311-win_amd64.whl
 ```
 
 OPTIONAL: Run the test suite to verify the extension.
