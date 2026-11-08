@@ -2,7 +2,7 @@
 
 A Windows-native implementation of the Mamba State Space Model (Mamba-1), adapted to support legacy NVIDIA GPU architectures within a modern PyTorch environment. The project focuses on retaining native CUDA support for older GPUs—including Kepler, Maxwell, Pascal, and Turing—while running cutting-edge AI models.
 
-> Based on the work of Tri Dao
+> Based on the work of Tri Dao and Albert Gu
 
 ## Project Roadmap
 
