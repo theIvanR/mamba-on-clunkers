@@ -10,8 +10,8 @@ A Windows-native implementation of the Mamba State Space Model (Mamba-1), adapte
   - Stable, pure-CUDA Mamba-1 execution across legacy GPU architectures (SM 3.5 through SM 7.5) on Windows.
 - **Phase 2: Optimization & Profiling** <badge color="warning">In Progress</badge>
   - Kepler/Pascal-specific kernel tuning, shared-memory optimization, and atomic reduction improvements.
-- **Phase 3: Cleanup** <badge color="secondary">Planned</badge>
-  - Complete removal of unused Triton, TileLang, and ROCm/HIP code from the repository, resulting in a lean, pure-CUDA fork.
+- **Phase 3: Other architectures** <badge color="secondary">Planned</badge>
+  - reintroduce amd capability.
 
 ## Key Achievements
 
