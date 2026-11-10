@@ -100,7 +100,7 @@ The forward-kernel gains are real and reproducible. The backward kernel did not 
 ## 2. High-performance prebuilt wheels
 - for high performance Pytorch 2.7.1: https://github.com/theIvanR/torch-on-clunkers
 - for causal-conv1d: https://drive.google.com/file/d/1deRG1heG6vdTK5LQpDq4JaMvartLdbx9/view?usp=drive_link
-- mamba-ssm: 
+- mamba-ssm: https://drive.google.com/file/d/1Fij970u4pzu-UrUJ99kdqEzCLKiReIDU/view?usp=drive_link
 
 > For additional Kepler GPU performance modifications, see [Kepler on Steroids](https://drive.google.com/file/d/1WeO1uz6DdOiAQooTUG2ouHa9ajZYDG0p/view?usp=drive_link).
 
