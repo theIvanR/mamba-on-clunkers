@@ -40,6 +40,9 @@ set /p "TORCH_CUDA_ARCH_LIST="<"%ARCH_FILE%"
 del "%ARCH_FILE%" 2>nul
 if not defined TORCH_CUDA_ARCH_LIST (echo [ERROR] Detected architecture list is empty. & exit /b 1)
 
+REM TEMP: Kepler micro-test override - DELETE AFTER
+REM set "TORCH_CUDA_ARCH_LIST=3.5"
+
 echo [build] TORCH_CUDA_ARCH_LIST=%TORCH_CUDA_ARCH_LIST%
 
 

@@ -142,26 +142,26 @@ extra_compile_args = {
     ),
 }
 
+# Glob the .cu sources so adding/removing instantiation shards doesn't require editing this file. 
+# One absolute anchor — setup.py can be invoked from any cwd.
+_SRC_DIR = Path(this_dir) / "csrc" / "selective_scan"
+
+# Discover .cu files on the filesystem, emit them as relocatable manifest paths.
+_CU_SOURCES = sorted(p.relative_to(this_dir).as_posix() for p in _SRC_DIR.glob("*.cu"))
+if not _CU_SOURCES:
+    raise RuntimeError(f"No .cu sources found under {_SRC_DIR}")
+
 ext_modules = [
     CUDAExtension(
         name="selective_scan_cuda",
         sources=[
-            "csrc/selective_scan/selective_scan.cpp",
-            "csrc/selective_scan/selective_scan_fwd_fp32.cu",
-            "csrc/selective_scan/selective_scan_fwd_fp16.cu",
-            "csrc/selective_scan/selective_scan_fwd_bf16.cu",
-            "csrc/selective_scan/selective_scan_bwd_fp32_real.cu",
-            "csrc/selective_scan/selective_scan_bwd_fp32_complex.cu",
-            "csrc/selective_scan/selective_scan_bwd_fp16_real.cu",
-            "csrc/selective_scan/selective_scan_bwd_fp16_complex.cu",
-            "csrc/selective_scan/selective_scan_bwd_bf16_real.cu",
-            "csrc/selective_scan/selective_scan_bwd_bf16_complex.cu",
+            "csrc/selective_scan/selective_scan.cpp",  # host TU, not a .cu
+            *_CU_SOURCES,
         ],
         extra_compile_args=extra_compile_args,
-        include_dirs=[Path(this_dir) / "csrc" / "selective_scan"],
+        include_dirs=[str(_SRC_DIR)],  # must be absolute (ninja)
     )
 ]
-
 
 def get_package_version():
     with open(Path(this_dir) / PACKAGE_NAME / "__init__.py", "r") as f:
@@ -182,7 +182,7 @@ setup(
             "build",
             "csrc",
             "include",
-            "tests",
+            "test_mamba",
             "dist",
             "docs",
             "benchmarks",
